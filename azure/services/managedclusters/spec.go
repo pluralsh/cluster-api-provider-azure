@@ -282,6 +282,9 @@ func (s *ManagedClusterSpec) Parameters(ctx context.Context, existing interface{
 			KubernetesVersion: &s.Version,
 			LinuxProfile: &containerservice.LinuxProfile{
 				AdminUsername: pointer.String(azure.DefaultAKSUserName),
+				SSH: &containerservice.SSHConfiguration{
+					PublicKeys: &[]containerservice.SSHPublicKey{},
+				},
 			},
 			ServicePrincipalProfile: &containerservice.ManagedClusterServicePrincipalProfile{
 				ClientID: pointer.String("msi"),

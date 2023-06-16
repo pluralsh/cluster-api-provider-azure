@@ -143,7 +143,7 @@ STAGING_REGISTRY := $(REGISTRY)
 PROD_REGISTRY := $(REGISTRY)
 IMAGE_NAME ?= cluster-api-azure-controller
 CONTROLLER_IMG ?= $(REGISTRY)/$(IMAGE_NAME)
-TAG ?= dev
+TAG ?= v1.9.7
 ARCH ?= $(GOARCH)
 ALL_ARCH = amd64 arm arm64 ppc64le s390x
 

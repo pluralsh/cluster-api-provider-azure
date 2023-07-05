@@ -532,7 +532,6 @@ spec:
             required:
             - location
             - resourceGroupName
-            - sshPublicKey
             - version
             type: object
           status:

@@ -18,7 +18,6 @@ package managedclusters
 
 import (
 	"context"
-	"encoding/base64"
 	"fmt"
 	"net"
 	"time"
@@ -270,10 +269,6 @@ func (s *ManagedClusterSpec) Parameters(ctx context.Context, existing interface{
 	ctx, log, done := tele.StartSpanWithLogger(ctx, "managedclusters.Service.Parameters")
 	defer done()
 
-	decodedSSHPublicKey, err := base64.StdEncoding.DecodeString(s.SSHPublicKey)
-	if err != nil {
-		return nil, errors.Wrap(err, "failed to decode SSHPublicKey")
-	}
 	managedCluster := containerservice.ManagedCluster{
 		Identity: &containerservice.ManagedClusterIdentity{
 			Type: containerservice.ResourceIdentityTypeSystemAssigned,
@@ -291,16 +286,6 @@ func (s *ManagedClusterSpec) Parameters(ctx context.Context, existing interface{
 			EnableRBAC:        pointer.Bool(true),
 			DNSPrefix:         &s.Name,
 			KubernetesVersion: &s.Version,
-			LinuxProfile: &containerservice.LinuxProfile{
-				AdminUsername: pointer.String(azure.DefaultAKSUserName),
-				SSH: &containerservice.SSHConfiguration{
-					PublicKeys: &[]containerservice.SSHPublicKey{
-						{
-							KeyData: pointer.String(string(decodedSSHPublicKey)),
-						},
-					},
-				},
-			},
 			ServicePrincipalProfile: &containerservice.ManagedClusterServicePrincipalProfile{
 				ClientID: pointer.String("msi"),
 			},

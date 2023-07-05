@@ -125,6 +125,7 @@ type AzureManagedControlPlaneSpec struct {
 
 	// SSHPublicKey is a string literal containing an ssh public key base64 encoded.
 	// Immutable.
+	// +optional
 	SSHPublicKey string `json:"sshPublicKey"`
 
 	// DNSServiceIP is an IP address assigned to the Kubernetes DNS service.
